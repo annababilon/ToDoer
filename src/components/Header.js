@@ -1,4 +1,5 @@
 import React from 'react'
+import LoginPanel from './LoginPanel'
 import SummaryPanel from './SummaryPanel'
 
 export default function Header({todosAmount}) {
@@ -9,7 +10,7 @@ export default function Header({todosAmount}) {
             </div>
 
             <SummaryPanel todosAmount={todosAmount}/>
-            
+            <LoginPanel/>
         </div>
     )
 }
