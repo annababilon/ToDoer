@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import TodoPanel from "./components/TodoPanel";
+import Header from "./components/Header";
+import "./styles.css";
+import NavPanel from "./components/NavPanel";
+
 
 function App() {
+  const [todosAmount, setTodosAmount] = useState([]);
+  const navTabs = ["Home", "About", "History", "Calender"];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header todosAmount={todosAmount} />
+      <div className="body-container">
+        <NavPanel navTabs={navTabs} />
+        <div className="main-content">
+          <TodoPanel setTodosAmount={setTodosAmount} />
+        </div>
+      </div>
+    </>
   );
 }
 
