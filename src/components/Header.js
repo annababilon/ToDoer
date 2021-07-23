@@ -10,7 +10,7 @@ export default function Header({todosAmount}) {
             </div>
 
             <SummaryPanel todosAmount={todosAmount}/>
-            <LoginPanel></LoginPanel>
+            <LoginPanel/>
         </div>
     )
 }
