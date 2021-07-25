@@ -3,13 +3,14 @@ import ToDoList from './TodoList';
 import { v4 as uuidv4 } from 'uuid';
 import CreateTodoModal from './CreateTodoModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
  
 export default function TodoPanel({setTodosAmount}) {
 
     const [todos, setTodos] = useState([]); 
-    // const todoNameRef = useRef();
+    const [toSearch, setToSearch] = useState("");
+    const phrase  = useRef();
     const LOCAL_STORAGE_KEY = 'toDoer.todos';
     let todosAmount = todos.filter(todo => !todo.complete).length;
 
@@ -60,6 +61,18 @@ export default function TodoPanel({setTodosAmount}) {
         console.log(newTodos);
         setTodos(newTodos);
     }
+
+    function searchTodos() {
+        const searchedPhrase = phrase.current.value;
+        setToSearch(searchedPhrase);
+    }
+
+    function cleanInput() {
+        setToSearch("");
+        phrase.current.value = "";
+     
+
+    }
     return (
         <div className= 'todo-panel'>
             <div className='todo-panel-header'>
@@ -75,12 +88,12 @@ export default function TodoPanel({setTodosAmount}) {
             <CreateTodoModal isOpen={isTodoModalOpen} closeCreateTodo = {()=> setIsTodoModalOpen(false)} addTodo={addTodo}/>
             <div>
                 <div className = 'search-todo-panel'>
-                    <input className = 'search-todo-input' placeholder='enter a phrase that you are searching for'></input>
-                    {/* <i className="fas fa-search fa-1g"></i> */}
-                    <FontAwesomeIcon icon = {faSearch} className='fa-search'/>
+                    <input className = 'search-todo-input' placeholder='enter a phrase that you are searching for'  ref = {phrase} onChange = {searchTodos}></input>
+                    
+                    {toSearch? <FontAwesomeIcon icon = {faTimes}  className='fa-times' onClick = {cleanInput}/> : <FontAwesomeIcon icon = {faSearch} className='fa-search'/> }
                 </div>
-                {todos.length == 0 && <p className = 'no-task-alert'>You haven't created any task yet.</p>}
-                <ToDoList todos = {todos} toggleTodo ={toggleTodo} />  
+                {todos.length === 0 && <p className = 'no-task-alert'>You haven't created any task yet.</p>}
+                <ToDoList todos = {todos} toSearch = {toSearch} toggleTodo ={toggleTodo} />  
 
                 <button className='clean-complete-btn' onClick={cleanCompleteTodos}>Clean Complete</button> 
             </div>
