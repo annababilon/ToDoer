@@ -11,8 +11,8 @@ export default function CreateTodoModal({
   closeCreateTodo,
   addTodo,
 }) {
-  const newTodo = useRef();
-  const newTodoDescription =useRef();
+  const todoName = useRef();
+  const description =useRef();
   const [deadline, setDeadline] = useState(null);
 
   const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
@@ -27,7 +27,7 @@ export default function CreateTodoModal({
         Set a deadline (optional)
       </p>
       </div>
-      {value && <div>Deadline: {value} </div>}
+      {value && <div className ="set-deadline-panel">Deadline: <b> {value} </b> </div>}
       
     </>
   
@@ -37,8 +37,8 @@ export default function CreateTodoModal({
 
   if (!isOpen) return null;
 
-  function createTodo(e) {
-    addTodo(e, newTodo, deadline);
+  function createTodo() {
+    addTodo(todoName, deadline, description);
   }
 
  
@@ -47,20 +47,15 @@ export default function CreateTodoModal({
       <div className="todo-input-window-overlay "></div>
       <div className="todo-input-window">
         <div className="todo-input-header">
-          {/* <i className="far fa-window-close fa-2x fake-button"></i> */}
           <FontAwesomeIcon icon = {faWindowClose} size="3x" className="fake-button" onClick={closeCreateTodo}></FontAwesomeIcon>
           <h2>CREATE TODO</h2>
-          {/* <i
-            className="far fa-window-close fa-2x close-todo-btn"
-            onClick={closeCreateTodo}
-          ></i> */}
 
         <FontAwesomeIcon icon = {faWindowClose} size="3x" className="close-todo-btn" onClick={closeCreateTodo}></FontAwesomeIcon>
         </div>
-        <h4>Title:</h4>
-        <input className="todo-input" type="text" ref={newTodo}></input>
-        {/* <h4>Description:</h4>
-        <input className="todo-input" type="text" ref={newTodoDescription}></input> */}
+        <h4>Title*:</h4>
+        <input className="todo-input" type="text" maxlength = "50"ref={todoName} autoFocus></input>
+        <h4>Description:</h4>
+        <textarea className="todo-input" maxLength = "340" rows = "5" ref={description}></textarea>
 
         <ReactDatePicker
           selected={deadline}
@@ -72,7 +67,7 @@ export default function CreateTodoModal({
         />
 
 
-        <button
+        <button className="create-todo-btn"
           onClick={() => {
             createTodo();
             setDeadline(null);

@@ -1,65 +1,21 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import ToDoList from './TodoList';
-import { v4 as uuidv4 } from 'uuid';
 import CreateTodoModal from './CreateTodoModal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
  
-export default function TodoPanel({setTodosAmount}) {
+export default function TodoPanel({todos, addTodo, toggleTodo, cleanCompleteTodos}) {
 
-    const [todos, setTodos] = useState([]); 
+    // const [todos, setTodos] = useState([]); 
     const [toSearch, setToSearch] = useState("");
     const phrase  = useRef();
-    const LOCAL_STORAGE_KEY = 'toDoer.todos';
-    let todosAmount = todos.filter(todo => !todo.complete).length;
+    // const LOCAL_STORAGE_KEY = 'toDoer.todos';
 
     const[isTodoModalOpen, setIsTodoModalOpen] = useState(false);
 
-    useEffect(()=>{
-        setTodosAmount(todosAmount);
-    },[todosAmount]
-    )
-
-
-    useEffect(()=>{
-        const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        if(storedTodos) {
-            setTodos(storedTodos);
-        }
-    }, []);
-
-    useEffect(()=> {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
-    }, [todos]);
-
-    function addTodo(e, todoNameRef, deadline){
-        const name = todoNameRef.current.value;
-        
-        if(name === '') return;
-        setTodos(prevTodos => {
-            return [...prevTodos, {id: uuidv4(), name: name, complete: false, deadline:deadline}] 
-        })
-        todoNameRef.current.value = null;
-    }
-    
-    function toggleTodo(id) {
-        const newTodos = [...todos];
-        const todo = newTodos.find(todo => todo.id === id);
-        todo.complete = !todo.complete;
-        setTodos(newTodos);
-        
-    }
-
     function openCreateTodoModal(e) {
-        setIsTodoModalOpen(true);
-        
-    }
-
-    function cleanCompleteTodos() {
-        const newTodos = todos.filter(todo => !todo.complete);
-        console.log(newTodos);
-        setTodos(newTodos);
+        setIsTodoModalOpen(true);  
     }
 
     function searchTodos() {
@@ -70,9 +26,9 @@ export default function TodoPanel({setTodosAmount}) {
     function cleanInput() {
         setToSearch("");
         phrase.current.value = "";
-     
-
     }
+
+
     return (
         <div className= 'todo-panel'>
             <div className='todo-panel-header'>
@@ -86,7 +42,7 @@ export default function TodoPanel({setTodosAmount}) {
         
             </div>
             <CreateTodoModal isOpen={isTodoModalOpen} closeCreateTodo = {()=> setIsTodoModalOpen(false)} addTodo={addTodo}/>
-            <div>
+            <div className="todo-panel-content">
                 <div className = 'search-todo-panel'>
                     <input className = 'search-todo-input' placeholder='enter a phrase that you are searching for'  ref = {phrase} onChange = {searchTodos}></input>
                     
@@ -95,7 +51,7 @@ export default function TodoPanel({setTodosAmount}) {
                 {todos.length === 0 && <p className = 'no-task-alert'>You haven't created any task yet.</p>}
                 <ToDoList todos = {todos} toSearch = {toSearch} toggleTodo ={toggleTodo} />  
 
-                <button className='clean-complete-btn' onClick={cleanCompleteTodos}>Clean Complete</button> 
+                {todos.length !== 0 && <button className='clean-complete-btn' onClick={cleanCompleteTodos}>Clean Complete</button> }
             </div>
                 
         </div>
