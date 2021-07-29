@@ -9,7 +9,7 @@ export default function Header({todosAmount}) {
             <h1 className= "website-name">ToDoer</h1>   
             </div>
 
-            <SummaryPanel todosAmount={todosAmount}/>
+           {todosAmount && <SummaryPanel todosAmount={todosAmount}/>}
             <LoginPanel/>
         </div>
     )

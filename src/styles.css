@@ -18,6 +18,17 @@ h4 {
   margin-top: 15px;
   margin-left: 15px;
 }
+
+.about{
+  color: #3c403d;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 50px;
+  padding: 30px;
+  height: min-content;
+  font-size: 18px;
+}
 .header {
   background-color: #daded4;
   display: flex;

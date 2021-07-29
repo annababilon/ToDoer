@@ -3,7 +3,7 @@ import NavTab from './NavTab'
 
 export default function NavPanel({navTabs}) {
 
-    const [selected, setSelected] = useState("Home");
+    const [selected, setSelected] = useState("about");
 
     // function changeTab(tab) {
     //     setSelected(tab);
