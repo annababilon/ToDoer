@@ -12,6 +12,7 @@ export default function CreateTodoModal({
   addTodo,
 }) {
   const newTodo = useRef();
+  const newTodoDescription =useRef();
   const [deadline, setDeadline] = useState(null);
 
   const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
@@ -46,18 +47,15 @@ export default function CreateTodoModal({
       <div className="todo-input-window-overlay "></div>
       <div className="todo-input-window">
         <div className="todo-input-header">
-          {/* <i className="far fa-window-close fa-2x fake-button"></i> */}
+    
           <FontAwesomeIcon icon = {faWindowClose} size="3x" className="fake-button" onClick={closeCreateTodo}></FontAwesomeIcon>
           <h2>CREATE TODO</h2>
-          {/* <i
-            className="far fa-window-close fa-2x close-todo-btn"
-            onClick={closeCreateTodo}
-          ></i> */}
 
         <FontAwesomeIcon icon = {faWindowClose} size="3x" className="close-todo-btn" onClick={closeCreateTodo}></FontAwesomeIcon>
         </div>
+        <h4>Title:</h4>
         <input className="todo-input" type="text" ref={newTodo}></input>
-
+    
         <ReactDatePicker
           selected={deadline}
           onChange={(date) => setDeadline(date)}
