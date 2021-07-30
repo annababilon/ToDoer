@@ -36,7 +36,7 @@ useEffect(()=> {
     
     if(name === '') return;
     setTodos(prevTodos => {
-        return [...prevTodos, {id: uuidv4(), name: name, complete: false, deadline:deadline}] 
+        return [...prevTodos, {id: uuidv4(), name: name, description : description, complete: false, deadline:deadline}] 
     })
     todoNameRef.current.value = null;
 }
@@ -61,7 +61,8 @@ function cleanCompleteTodos() {
       <div className="body-container">
         <NavPanel navTabs={navTabs} />
         <div className="main-content">
-          <Switch>
+          <Switch> 
+            <Route path = "/" exact component= {About} />
             <Route path = "/about" component= {About} />
             <Route path = "/backlog">
               <TodoPanel todos= {todos} addTodo= {addTodo} toggleTodo = {toggleTodo} cleanCompleteTodos = {cleanCompleteTodos}/>

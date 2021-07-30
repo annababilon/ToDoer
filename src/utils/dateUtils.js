@@ -13,9 +13,12 @@ export const changeDateFormatShort = function (localeDate) {
   return new Date(localeDate).toLocaleDateString("en-GB", options);
 };
 
-export const isDeadlineSoon = function (deadline, numOfDays) {
+export const isDeadlineSoon = function (deadline) {
   let comparisonDate = new Date();
-  console.log(comparisonDate, deadline, numOfDays);
-  comparisonDate.setDate(comparisonDate.getDate() + numOfDays);
-  return comparisonDate >= new Date(deadline);
+  return countDays(deadline, comparisonDate) <= 3;
 };
+
+export const countDays = function(date1, date2){
+  return Math.round((new Date(date1) - new Date(date2))/ (1000 * 60 * 60 * 24));
+  //   return Math.abs((new Date(date1) - new Date(date2))/ (1000 * 60 * 60 * 24));
+}

@@ -64,6 +64,16 @@ h4 {
   padding: 10px;
 }
 
+.fa-chevron-down{
+  margin-left: 5px;
+  color: #3c403d;
+  cursor: pointer;
+}
+
+.fa-chevron-down:hover{
+  margin-left: 5px;
+}
+
 .login-container {
   padding-top: 10px;
   padding-right: 10px;
@@ -194,7 +204,7 @@ h4 {
   border: solid #8eada7 2px;
 }
 
-.todo label {
+.todo-label {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,6 +214,7 @@ h4 {
   font-size: 16px;
   background-color: #daded4;
   padding: 3px 5px;
+  margin: 0 3px;
   width: max-content;
   border-radius: 2px;
   text-style: italic;
