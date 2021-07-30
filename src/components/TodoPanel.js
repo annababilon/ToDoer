@@ -55,7 +55,5 @@ export default function TodoPanel({todos, addTodo, toggleTodo, cleanCompleteTodo
             </div>
                 
         </div>
-
-    )
+  );
 }
-
