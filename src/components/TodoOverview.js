@@ -1,12 +1,30 @@
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { changeDateFormatLong } from "../utils/dateUtils";
+import React, {useState} from "react";
+import CreateTodoModal from "./CreateTodoModal";
+
 
 export default function TodoOverview({todo}) {
 
+    const[isTodoModalOpen, setIsTodoModalOpen] = useState(false);
+
+    function openCreateTodoModal(e) {
+        setIsTodoModalOpen(true);  
+    }
 
     return (
-<div>
-    <h4>{todo.name}</h4>
-    <p> {todo.deadline}</p>
-    <div>{todo.description}</div>
+<div className = "todo-overview">
+    <div className="todo-overview-header">
+    <p><b>#{todo.name}</b></p>
+    <FontAwesomeIcon icon={faEdit} onClick={openCreateTodoModal }></FontAwesomeIcon>
+    {isTodoModalOpen && <CreateTodoModal closeCreateTodo = {()=> setIsTodoModalOpen(false)} todo = {todo}/>}
+    </div>
+    
+    <p className= "todo-overview-description">{todo.description}</p>
+    {todo.deadline && <p className="todo-overview-deadline"> Deadline: {changeDateFormatLong(todo.deadline)}</p>}
+
+
 </div>
     )
 }

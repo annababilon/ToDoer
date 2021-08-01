@@ -1,14 +1,16 @@
 import React from 'react'
+import { useState } from 'react';
 import {Link} from "react-router-dom";
 
-export default function NavTab({navTab, setSelected}) {
+export default function NavTab({navTab, changeCurrentTab, isActive}) {
     const link = `/${navTab}`;
+    
+   function setAsActiveTab(){
+       changeCurrentTab(navTab);
+   }
 
-    function setTab(tab) {
-        setSelected(tab);
-    }
     return (
-        <Link to = {link} style={{ textDecoration: 'none' }}><li onClick ={setTab} key ={navTab}><a href= {link}>{navTab}</a></li> </Link>
-        // <li onClick ={setTab} key ={navTab}><a href= {link}>{navTab}</a></li>
+        <Link to = {link} style={{ textDecoration: 'none' }}><li key ={navTab} className={isActive? "nav-tab-active":"nav-tab-inactive"} onClick ={setAsActiveTab}>{navTab}</li> </Link>
+   
     )
 }
