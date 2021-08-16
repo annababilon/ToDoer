@@ -98,7 +98,7 @@ body {
 .main-content {
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .nav-panel {
@@ -167,13 +167,16 @@ body {
   height: 100%;
 }
 
-.todo-panel h2 {
+.todo-panel h2, .day-panel h2 {
   text-align: center;
   padding: 8px;
   font-size: 2em;
   align-self: center;
   border-radius: 3px;
+  color: #3c403d;
 }
+
+
 
 .todo-overview {
   border: #8eada7;
@@ -325,6 +328,7 @@ body {
 .react-datepicker__close-icon::after {
   background-color: #3c403d;
 }
+
 .todo-input-window h2 {
   text-align: center;
   padding: 10px;
@@ -398,3 +402,16 @@ body {
     display: none;
   }
 } */
+.day{
+  width: 500px;
+}
+
+.day-panel{
+  display: flex;
+  margin: 20px;
+}
+
+.day-nav-arrow{
+  align-self: center;
+  margin: 5px;
+}

@@ -5,11 +5,11 @@ import React, { forwardRef, useRef, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import ReactDom from "react-dom";
 
-export default function CreateTodoModal({ closeCreateTodo, addTodo, todo }) {
+export default function CreateTodoModal({ closeCreateTodo, addTodo, updateTodo, todo }) {
   const todoName = useRef();
-  const description = useRef();
+  const descriptionName = useRef();
   const [deadline, setDeadline] = useState(
-    todo ? new Date(todo.deadline) : null
+    todo ? todo.deadline : null
   );
 
   const [nameValue, setNameValue] = useState(todo ? todo.name : "");
@@ -34,12 +34,16 @@ export default function CreateTodoModal({ closeCreateTodo, addTodo, todo }) {
   ));
 
   function handleTodo() {
-    if (!todo) addTodo(todoName, deadline, description);
+    const name = todoName.current.value;
+    const description = descriptionName.current.value;
+
+    if (!todo) addTodo(name, deadline, description);
     else {
-      todo.name = todoName.current.value;
-      todo.deadline = deadline;
-      todo.description = description.current.value;
-    }
+      updateTodo(todo.id, name, deadline, description)
+      };
+  
+
+    todoName.current.value = null;
   }
 
   return ReactDom.createPortal(
@@ -77,9 +81,9 @@ export default function CreateTodoModal({ closeCreateTodo, addTodo, todo }) {
           className="todo-input"
           maxLength="340"
           rows="5"
-          ref={description}
+          ref={descriptionName}
           value={descriptionValue}
-          onChange={(e) => setDescriptionValue(description.current.value)}
+          onChange={(e) => setDescriptionValue(descriptionName.current.value)}
         ></textarea>
 
         <ReactDatePicker

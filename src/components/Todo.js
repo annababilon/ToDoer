@@ -1,14 +1,14 @@
 import {
   faBell,
   faChevronDown,
-  faClosedCaptioning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { changeDateFormatShort, isDeadlineSoon } from "../utils/dateUtils";
 import TodoOverview from "./TodoOverview";
 
-export default function Todo({ todo, toggleTodo, setOpenedTodo, openedTodo }) {
+export default function Todo({ todo, toggleTodo, updateTodo, setOpenedTodo, openedTodo }) {
+  
   function toggleShowStatus() {
     if (openedTodo !== todo.id) {
       setOpenedTodo(todo.id);
@@ -21,10 +21,6 @@ export default function Todo({ todo, toggleTodo, setOpenedTodo, openedTodo }) {
     toggleTodo(todo.id);
   }
 
-  // function showTodo(){
-  //    setOpenedTodo(todo.id);
-  //   // setShow(true);
-  // }
 
   return (
     <>
@@ -60,7 +56,7 @@ export default function Todo({ todo, toggleTodo, setOpenedTodo, openedTodo }) {
           </div>
         </div>
       </div>
-      {openedTodo === todo.id && <TodoOverview todo={todo}></TodoOverview>}
+      {openedTodo === todo.id && <TodoOverview todo={todo}  updateTodo = {updateTodo} setOpenedTodo = {setOpenedTodo}></TodoOverview>}
     </>
   );
 }

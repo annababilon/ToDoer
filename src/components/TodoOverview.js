@@ -5,7 +5,7 @@ import React, {useState} from "react";
 import CreateTodoModal from "./CreateTodoModal";
 
 
-export default function TodoOverview({todo}) {
+export default function TodoOverview({todo, updateTodo}) {
 
     const[isTodoModalOpen, setIsTodoModalOpen] = useState(false);
 
@@ -18,7 +18,7 @@ export default function TodoOverview({todo}) {
     <div className="todo-overview-header">
     <p><b>#{todo.name}</b></p>
     <FontAwesomeIcon icon={faEdit} onClick={openCreateTodoModal }></FontAwesomeIcon>
-    {isTodoModalOpen && <CreateTodoModal closeCreateTodo = {()=> setIsTodoModalOpen(false)} todo = {todo}/>}
+    {isTodoModalOpen && <CreateTodoModal closeCreateTodo = {()=> setIsTodoModalOpen(false)} updateTodo ={updateTodo} todo = {todo}/>}
     </div>
     
     <p className= "todo-overview-description">{todo.description}</p>

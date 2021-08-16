@@ -1,19 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
-import TodoPanel from "./components/TodoPanel";
 import Header from "./components/Header";
 import "./styles.css";
 import NavPanel from "./components/NavPanel";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/About";
 import { v4 as uuidv4 } from "uuid";
+import Planner from "./components/Planner";
 
 function App() {
-  const navTabs = ["about", "backlog", "history", "calender"];
+  const navTabs = ["About", "Planner", "History", "Calender"];
   const [todos, setTodos] = useState([]);
   const phrase = useRef();
   const LOCAL_STORAGE_KEY = "toDoer.todos";
   const todosAmount = todos.filter((todo) => !todo.complete).length;
 
+ 
+  
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
     if (storedTodos) {
@@ -25,9 +27,8 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  function addTodo(todoNameRef, deadline, descriptionRef) {
-    const name = todoNameRef.current.value;
-    const description = descriptionRef.current.value;
+
+  function addTodo(name, deadline, description) {
 
     if (name === "") return;
     setTodos((prevTodos) => {
@@ -42,7 +43,24 @@ function App() {
         },
       ];
     });
-    todoNameRef.current.value = null;
+    
+  }
+
+  function updateTodo(todoId, name, deadline, description) {
+    console.log("batat");
+    if(name === "") return;
+    setTodos((prevTodos) => {
+      const toDeleteIndex = todos.findIndex(todo => todo.id === todoId);
+      const newTodos = [...prevTodos];
+      newTodos.splice(toDeleteIndex, 1, {
+          id: uuidv4(),
+            name: name,
+            description: description,
+            complete: false,
+            deadline: deadline,
+        });
+      return newTodos;
+    });
   }
 
   function toggleTodo(id) {
@@ -66,11 +84,12 @@ function App() {
         <div className="main-content">
           <Switch>
             <Route path="/" exact component={About} />
-            <Route path="/about" component={About} />
-            <Route path="/backlog">
-              <TodoPanel
+            <Route path="/About" component={About} />
+            <Route path="/Planner">
+              <Planner
                 todos={todos}
                 addTodo={addTodo}
+                updateTodo = {updateTodo}
                 toggleTodo={toggleTodo}
                 cleanCompleteTodos={cleanCompleteTodos}
               />

@@ -7,13 +7,13 @@ import { faPlus, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 export default function TodoPanel({
   todos,
   addTodo,
+  updateTodo,
   toggleTodo,
   cleanCompleteTodos,
 }) {
-  // const [todos, setTodos] = useState([]);
   const [toSearch, setToSearch] = useState("");
   const phrase = useRef();
-  // const LOCAL_STORAGE_KEY = 'toDoer.todos';
+
 
   const [isTodoModalOpen, setIsTodoModalOpen] = useState(false);
 
@@ -74,7 +74,7 @@ export default function TodoPanel({
         {todos.length === 0 && (
           <p className="no-task-alert">You haven't created any task yet.</p>
         )}
-        <ToDoList todos={todos} toSearch={toSearch} toggleTodo={toggleTodo} />
+        <ToDoList todos={todos}  updateTodo = {updateTodo} toSearch={toSearch} toggleTodo={toggleTodo} />
 
         {todos.length !== 0 && (
           <button className="clean-complete-btn" onClick={cleanCompleteTodos}>
