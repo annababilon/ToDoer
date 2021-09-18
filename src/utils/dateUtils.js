@@ -26,5 +26,5 @@ export const countDays = function(date1, date2){
 export const checkIfTheSameDate = function(date1, date2){
   date1.setHours(0,0,0,0);
   date2.setHours(0,0,0,0);
-  return countDays((date2-date1) === 0);
+  return countDays(date2,date1) === 0;
 }

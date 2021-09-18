@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import Header from "./components/Header";
 import "./styles.css";
+import Header from "./components/Header";
+
 import NavPanel from "./components/NavPanel";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/About";
@@ -10,7 +11,6 @@ import Planner from "./components/Planner";
 function App() {
   const navTabs = ["About", "Planner", "History", "Calender"];
   const [todos, setTodos] = useState([]);
-  const phrase = useRef();
   const LOCAL_STORAGE_KEY = "toDoer.todos";
   const todosAmount = todos.filter((todo) => !todo.complete).length;
 
@@ -40,14 +40,14 @@ function App() {
           description: description,
           complete: false,
           deadline: deadline,
+          plannedDate: null
         },
       ];
     });
     
   }
-
+ //to change, find out how to render component when only any value in object changes
   function updateTodo(todoId, name, deadline, description) {
-    console.log("batat");
     if(name === "") return;
     setTodos((prevTodos) => {
       const toDeleteIndex = todos.findIndex(todo => todo.id === todoId);
@@ -63,6 +63,16 @@ function App() {
     });
   }
 
+  function assignPlannedDate(todoId, date) {
+    setTodos((prevTodos) => {
+      
+      const newTodos = [...prevTodos];
+      const toChange = newTodos.findIndex(todo => todo.id === todoId);
+      newTodos[toChange].plannedDate = date;
+      return newTodos;
+    });
+    
+  }
   function toggleTodo(id) {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
@@ -92,6 +102,7 @@ function App() {
                 updateTodo = {updateTodo}
                 toggleTodo={toggleTodo}
                 cleanCompleteTodos={cleanCompleteTodos}
+                assignPlannedDate = {assignPlannedDate}
               />
             </Route>
           </Switch>

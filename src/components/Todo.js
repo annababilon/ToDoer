@@ -4,12 +4,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
+import { Draggable } from "react-beautiful-dnd";
 import { changeDateFormatShort, isDeadlineSoon } from "../utils/dateUtils";
 import TodoOverview from "./TodoOverview";
 
-export default function Todo({ todo, toggleTodo, updateTodo, setOpenedTodo, openedTodo }) {
+export default function Todo({ todo, toggleTodo, updateTodo, setOpenedTodo, openedTodo, index }) {
   
-  function toggleShowStatus() {
+  function toggleShowTodo() {
     if (openedTodo !== todo.id) {
       setOpenedTodo(todo.id);
     } else {
@@ -23,8 +24,13 @@ export default function Todo({ todo, toggleTodo, updateTodo, setOpenedTodo, open
 
 
   return (
-    <>
-      <div className="todo">
+    <Draggable draggableId ={todo.id} index = {index}>
+     { (provided) => (
+       <>
+        <div className="todo" 
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        ref = {provided.innerRef}>
         <div className="todo-label">
           <div className="todo-name">
             {todo.deadline && isDeadlineSoon(todo.deadline) && (
@@ -45,7 +51,7 @@ export default function Todo({ todo, toggleTodo, updateTodo, setOpenedTodo, open
             <FontAwesomeIcon
               icon={faChevronDown}
               size="sm"
-              onClick={toggleShowStatus}
+              onClick={toggleShowTodo}
             />
             <input
               className="todo-checkbox"
@@ -57,7 +63,11 @@ export default function Todo({ todo, toggleTodo, updateTodo, setOpenedTodo, open
         </div>
       </div>
       {openedTodo === todo.id && <TodoOverview todo={todo}  updateTodo = {updateTodo} setOpenedTodo = {setOpenedTodo}></TodoOverview>}
-    </>
+      </>
+     )
+
+     }
+      </Draggable>
   );
 }
 
