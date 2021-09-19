@@ -4,79 +4,86 @@ import TodoPanel from "./TodoPanel";
 import { checkIfTheSameDate } from "../utils/dateUtils";
 import { DragDropContext } from "react-beautiful-dnd";
 
-
 export default function Planner({
-  todos,
+  unplannedTodos,
+  dayPlan,
   addTodo,
   updateTodo,
+  assignToDay,
+  assignToBacklog,
   toggleTodo,
   cleanCompleteTodos,
-  assignPlannedDate
+  reorderPlannedTodos, 
+  reorderUnplannedTodos
 }) {
-
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(() => {
+    const newDate = new Date();
+    newDate.setHours(0,0,0,0);
+    return newDate;
+  });
   const todoPanelDroppableId = "todoPanel";
   const dayDroppableId = "day";
-  // is it ok that I have a variable set with a filter?
-  const currentTodos = todos.filter(
-    function(todo){ 
-      if(todo.plannedDate){
-        const formatedDate = new Date(todo.plannedDate);
-        const result = checkIfTheSameDate(formatedDate,date);
-        return checkIfTheSameDate(formatedDate, date);
-      }
-      return false;
-     
-    }
-  );
+
+  const dateKey = date.toString();
+  const currentTodos = dayPlan.has(dateKey) ? dayPlan.get(dateKey) : [];
 
   function increaseDate() {
     const newDate = new Date();
     newDate.setDate(date.getDate() + 1);
+    newDate.setHours(0,0,0,0);
     setDate(newDate);
   }
 
   function decreaseDate() {
     const newDate = new Date();
     newDate.setDate(date.getDate() - 1);
+    newDate.setHours(0,0,0,0);
     setDate(newDate);
   }
 
   function onDragEnd(result) {
+    console.log(result);
+    const { destination, source, draggableId } = result;
+    if (!destination) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
 
-    const {destination, source, draggableId} = result;
-    if(!destination) return;
-    if(destination.droppableId === source.droppableId && destination.index === source.index) return;
-
-    if (source.droppableId === todoPanelDroppableId && destination.droppableId === dayDroppableId ){
-      assignPlannedDate(result.draggableId, date);
+    if (source.droppableId === todoPanelDroppableId && destination.droppableId === dayDroppableId) {
+        assignToDay(result.draggableId, date, destination.index);
+    } else if (
+      source.droppableId === dayDroppableId &&
+      destination.droppableId === todoPanelDroppableId
+    ) {
+      assignToBacklog(result.draggableId, date, destination.index);
+    } else if (destination.droppableId === todoPanelDroppableId){
+      reorderUnplannedTodos(source.index, destination.index);
+    } else {
+      reorderPlannedTodos(date, source.index, destination.index);
     }
-  if (source.droppableId === dayDroppableId && destination.droppableId === todoPanelDroppableId ) {
-    assignPlannedDate(result.draggableId, null);
-    }
-
   }
 
   return (
-      <DragDropContext onDragEnd = {onDragEnd}>
-        <Day
-          date={date}
-          currentTodos={currentTodos}
-          toggleTodo={toggleTodo}
-          increaseDate={increaseDate}
-          decreaseDate={decreaseDate}
-          droppableId = {dayDroppableId}
-        />
-        {console.log(currentTodos)}
-        <TodoPanel
-          todos={todos}
-          addTodo={addTodo}
-          updateTodo={updateTodo}
-          toggleTodo={toggleTodo}
-          cleanCompleteTodos={cleanCompleteTodos}
-          droppableId = {todoPanelDroppableId}
-        />
-      </DragDropContext>
-
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Day
+        date={date}
+        currentTodos={currentTodos}
+        toggleTodo={toggleTodo}
+        increaseDate={increaseDate}
+        decreaseDate={decreaseDate}
+        droppableId={dayDroppableId}
+      />
+      {console.log(currentTodos)}
+      <TodoPanel
+        todos={unplannedTodos}
+        addTodo={addTodo}
+        updateTodo={updateTodo}
+        toggleTodo={toggleTodo}
+        cleanCompleteTodos={cleanCompleteTodos}
+        droppableId={todoPanelDroppableId}
+      />
+    </DragDropContext>
   );
 }

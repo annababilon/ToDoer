@@ -3,7 +3,6 @@ import ToDoList from "./TodoList";
 import CreateTodoModal from "./CreateTodoModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Droppable } from "react-beautiful-dnd";
 
 export default function TodoPanel({
   todos,
@@ -34,12 +33,13 @@ export default function TodoPanel({
   }
 
   return (
-    <Droppable droppableId = {droppableId}>
-      { (provided) => (
-    <div className="todo-panel"   ref = {provided.innerRef} {...provided.droppableProps}>
+    <div className="todo-panel">
       <div className="todo-panel-header">
+        {/* <i className='fas fa-plus fa-2x fake-button'></i> */}
         <FontAwesomeIcon icon={faPlus} size="3x" className="fake-button" />
         <h2> TODO List</h2>
+
+        {/* <i className='fas fa-plus fa-2x add-todo-btn' onClick={openCreateTodoModal}></i> */}
         <FontAwesomeIcon
           icon={faPlus}
           size="3x"
@@ -73,18 +73,15 @@ export default function TodoPanel({
           )}
         </div>
         {todos.length === 0 && (
-          <p className="no-task-alert">You haven't created any task yet.</p>
+          <p className="no-task-alert">You have no tasks in backlog.</p>
         )}
-        <ToDoList todos={todos.filter(todo => !todo.plannedDate)}  updateTodo = {updateTodo} toSearch={toSearch} toggleTodo={toggleTodo} />
+        <ToDoList todos={todos}  updateTodo = {updateTodo} toSearch={toSearch} toggleTodo={toggleTodo} droppableId = {droppableId}/>
         {todos.length !== 0 && (
           <button className="clean-complete-btn" onClick={cleanCompleteTodos}>
             Clean Complete
           </button>
         )}
       </div>
-      {provided.placeholder}
     </div>
-      )}
-    </Droppable>
   );
 }

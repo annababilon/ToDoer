@@ -160,6 +160,7 @@ body {
 .todo-list {
   padding: 0 10px;
   overflow-y: auto;
+  height: 100%;
 }
 .todo-panel-content {
   display: flex;
