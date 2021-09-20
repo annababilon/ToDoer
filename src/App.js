@@ -70,7 +70,8 @@ function App() {
       ];
     });
   }
-  //to change, find out how to render component when only any value in object changes
+  //TODO
+  // update also already planned todos
   function updateTodo(todoId, name, deadline, description) {
     if (name === "") return;
     setTodos((prevTodos) => {
@@ -140,16 +141,23 @@ function App() {
     });
   }
   
-  function toggleTodo(id) {
-    const newTodos = [...todos];
+
+  function toggleTodo(id, date) {
+    const dateKey = date.toString();
+    const newDayPlan = new Map(dayPlan);
+    const newTodos = newDayPlan.get(dateKey);
     const todo = newTodos.find((todo) => todo.id === id);
     todo.complete = !todo.complete;
-    setTodos(newTodos);
+    setDayPlan(newDayPlan);
   }
 
-  function cleanCompleteTodos() {
-    const newTodos = todos.filter((todo) => !todo.complete);
-    setTodos(newTodos);
+  function cleanCompleteTodos(date) {
+    const dateKey = date.toString();
+    console.log("klucz". dateKey);
+    const newDayPlan = new Map(dayPlan);
+    const newTodos = newDayPlan.get(dateKey).filter((todo)=> !todo.complete);
+    newDayPlan.set(dateKey, newTodos)
+    setDayPlan(newDayPlan);
   }
 
   function reorderUnplannedTodos(sourceIndex, destinationIndex) {

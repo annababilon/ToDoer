@@ -2,18 +2,12 @@ import React, {useState} from "react";
 import Todo from "./Todo";
 import {Droppable} from 'react-beautiful-dnd';
 
-export default function ToDoList({ todos, toggleTodo, updateTodo,  toSearch, droppableId}) {
+export default function ToDoList({ todos, date, toggleTodo, updateTodo,  toSearch, droppableId}) {
 
   const [openedTodo, setOpenedTodo] = useState();
 
   return (
 
-
-    // <div className="todo-list">
-    //   {todos.filter(todo => todo.name.includes(toSearch)).map((todo, index) => {
-    //     return <Todo key={todo.id} todo={todo}  updateTodo = {updateTodo} toggleTodo={toggleTodo} openedTodo={openedTodo} setOpenedTodo ={setOpenedTodo}/>;
-    //   })}
-    // </div>
 
 <Droppable droppableId = {droppableId}>
 
@@ -30,6 +24,7 @@ export default function ToDoList({ todos, toggleTodo, updateTodo,  toSearch, dro
         <Todo
           key={todo.id}
           todo={todo}
+          date = {date}
           updateTodo={updateTodo}
           toggleTodo={toggleTodo}
           openedTodo={openedTodo}

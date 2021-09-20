@@ -57,6 +57,8 @@ export default function Planner({
       source.droppableId === dayDroppableId &&
       destination.droppableId === todoPanelDroppableId
     ) {
+      //TODO
+      // if todo completed toggle it before sending back to Backlog
       assignToBacklog(result.draggableId, date, destination.index);
     } else if (destination.droppableId === todoPanelDroppableId){
       reorderUnplannedTodos(source.index, destination.index);
@@ -74,14 +76,13 @@ export default function Planner({
         increaseDate={increaseDate}
         decreaseDate={decreaseDate}
         droppableId={dayDroppableId}
+        cleanCompleteTodos={cleanCompleteTodos}
       />
       {console.log(currentTodos)}
       <TodoPanel
         todos={unplannedTodos}
         addTodo={addTodo}
         updateTodo={updateTodo}
-        toggleTodo={toggleTodo}
-        cleanCompleteTodos={cleanCompleteTodos}
         droppableId={todoPanelDroppableId}
       />
     </DragDropContext>

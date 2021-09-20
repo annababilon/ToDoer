@@ -4,23 +4,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {
-  changeDateFormatLong,
-  countDays,
-} from "../utils/dateUtils";
+import { changeDateFormatLong, countDays } from "../utils/dateUtils";
 import ToDoList from "./TodoList";
 
-import {Droppable} from 'react-beautiful-dnd';
+import { Droppable } from "react-beautiful-dnd";
 export default function Day({
   date,
   currentTodos,
   toggleTodo,
   increaseDate,
   decreaseDate,
-  droppableId
+  droppableId,
+  cleanCompleteTodos,
 }) {
-  //date.setHours(0, 0, 0, 0);
-
   function getDaysName(date) {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -39,26 +35,44 @@ export default function Day({
     decreaseDate();
   }
 
+  function deleteCompleteTodos() {
+    date.setHours(0, 0, 0, 0);
+    cleanCompleteTodos(date);
+  }
   return (
     <div className="day-panel">
-      <FontAwesomeIcon
-        className="day-nav-arrow"
-        icon={faChevronLeft}
-        onClick={previousDay}
-      ></FontAwesomeIcon>
-      <div className="day">
-        <h2> {getDaysName(date)} </h2>
-        {!currentTodos && (
+
+        <div className="todo-panel-header">
+          <FontAwesomeIcon
+            className="day-nav-arrow"
+            icon={faChevronLeft}
+            size="2x"
+            onClick={previousDay}
+          ></FontAwesomeIcon>
+          <h2> {getDaysName(date)} </h2>
+          <FontAwesomeIcon
+            className="day-nav-arrow"
+            icon={faChevronRight}
+            size="2x"
+            onClick={nextDay}
+          ></FontAwesomeIcon>
+        </div>
+
+        {currentTodos.length !== 0 && (
+          <button className="clean-complete-btn" onClick={deleteCompleteTodos}>
+            Clean Complete
+          </button>
+        )}
+        {currentTodos.length === 0 && (
           <p className="no-task-alert">Nothing planned for today.</p>
         )}
-        <ToDoList todos={currentTodos} toggleTodo={toggleTodo} droppableId = {droppableId} />
-
-      </div>
-      <FontAwesomeIcon
-        className="day-nav-arrow"
-        icon={faChevronRight}
-        onClick={nextDay}
-      ></FontAwesomeIcon>
+        <ToDoList
+          todos={currentTodos}
+          date={date}
+          toggleTodo={toggleTodo}
+          droppableId={droppableId}
+        />
+    
     </div>
   );
 }

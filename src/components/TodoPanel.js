@@ -4,12 +4,12 @@ import CreateTodoModal from "./CreateTodoModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
+//TODO
+// change everywhere names from TodoPanel to Backlog
 export default function TodoPanel({
   todos,
   addTodo,
   updateTodo,
-  toggleTodo,
-  cleanCompleteTodos,
   droppableId
 }) {
   const [toSearch, setToSearch] = useState("");
@@ -35,11 +35,8 @@ export default function TodoPanel({
   return (
     <div className="todo-panel">
       <div className="todo-panel-header">
-        {/* <i className='fas fa-plus fa-2x fake-button'></i> */}
         <FontAwesomeIcon icon={faPlus} size="3x" className="fake-button" />
-        <h2> TODO List</h2>
-
-        {/* <i className='fas fa-plus fa-2x add-todo-btn' onClick={openCreateTodoModal}></i> */}
+        <h2> Todos BACKLOG</h2>
         <FontAwesomeIcon
           icon={faPlus}
           size="3x"
@@ -75,12 +72,7 @@ export default function TodoPanel({
         {todos.length === 0 && (
           <p className="no-task-alert">You have no tasks in backlog.</p>
         )}
-        <ToDoList todos={todos}  updateTodo = {updateTodo} toSearch={toSearch} toggleTodo={toggleTodo} droppableId = {droppableId}/>
-        {todos.length !== 0 && (
-          <button className="clean-complete-btn" onClick={cleanCompleteTodos}>
-            Clean Complete
-          </button>
-        )}
+        <ToDoList todos={todos}  updateTodo = {updateTodo} toSearch={toSearch} droppableId = {droppableId}/>
       </div>
     </div>
   );
