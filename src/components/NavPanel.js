@@ -19,7 +19,7 @@ export default function NavPanel({ navTabs }) {
               key={navTab}
               navTab={navTab}
               changeCurrentTab={changeCurrentTab}
-              isActive={navTab == currentTab}
+              isActive={navTab === currentTab}
             />
           );
         })}

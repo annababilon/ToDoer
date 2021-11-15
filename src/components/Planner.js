@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Day from "./Day";
 import TodoPanel from "./TodoPanel";
-import { checkIfTheSameDate } from "../utils/dateUtils";
 import { DragDropContext } from "react-beautiful-dnd";
 
 export default function Planner({
@@ -42,7 +41,6 @@ export default function Planner({
   }
 
   function onDragEnd(result) {
-    console.log(result);
     const { destination, source, draggableId } = result;
     if (!destination) return;
     if (

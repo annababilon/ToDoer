@@ -10,6 +10,5 @@ export default function NavTab({navTab, changeCurrentTab, isActive}) {
 
     return (
         <Link to = {link} style={{ textDecoration: 'none' }}><li key ={navTab} className={isActive? "nav-tab-active":"nav-tab-inactive"} onClick ={setAsActiveTab}>{navTab}</li> </Link>
-   
     )
 }

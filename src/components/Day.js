@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { changeDateFormatLong, countDays } from "../utils/dateUtils";
 import ToDoList from "./TodoList";
 
-import { Droppable } from "react-beautiful-dnd";
 export default function Day({
   date,
   currentTodos,
@@ -41,38 +40,36 @@ export default function Day({
   }
   return (
     <div className="day-panel">
+      <div className="todo-panel-header">
+        <FontAwesomeIcon
+          className="day-nav-arrow"
+          icon={faChevronLeft}
+          size="2x"
+          onClick={previousDay}
+        ></FontAwesomeIcon>
+        <h2> {getDaysName(date)} </h2>
+        <FontAwesomeIcon
+          className="day-nav-arrow"
+          icon={faChevronRight}
+          size="2x"
+          onClick={nextDay}
+        ></FontAwesomeIcon>
+      </div>
 
-        <div className="todo-panel-header">
-          <FontAwesomeIcon
-            className="day-nav-arrow"
-            icon={faChevronLeft}
-            size="2x"
-            onClick={previousDay}
-          ></FontAwesomeIcon>
-          <h2> {getDaysName(date)} </h2>
-          <FontAwesomeIcon
-            className="day-nav-arrow"
-            icon={faChevronRight}
-            size="2x"
-            onClick={nextDay}
-          ></FontAwesomeIcon>
-        </div>
-
-        {currentTodos.length !== 0 && (
-          <button className="clean-complete-btn" onClick={deleteCompleteTodos}>
-            Clean Complete
-          </button>
-        )}
-        {currentTodos.length === 0 && (
-          <p className="no-task-alert">Nothing planned for today.</p>
-        )}
-        <ToDoList
-          todos={currentTodos}
-          date={date}
-          toggleTodo={toggleTodo}
-          droppableId={droppableId}
-        />
-    
+      {currentTodos.length !== 0 && (
+        <button className="clean-complete-btn" onClick={deleteCompleteTodos}>
+          Clean Complete
+        </button>
+      )}
+      {currentTodos.length === 0 && (
+        <p className="no-task-alert">Nothing planned for today.</p>
+      )}
+      <ToDoList
+        todos={currentTodos}
+        date={date}
+        toggleTodo={toggleTodo}
+        droppableId={droppableId}
+      />
     </div>
   );
 }

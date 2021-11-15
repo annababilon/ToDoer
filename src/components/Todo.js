@@ -1,6 +1,6 @@
 import { faBell, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { changeDateFormatShort, isDeadlineSoon } from "../utils/dateUtils";
 import TodoOverview from "./TodoOverview";
@@ -14,7 +14,6 @@ export default function Todo({
   openedTodo,
   index,
 }) {
-  console.log("date", date);
   function toggleShowTodo() {
     if (openedTodo !== todo.id) {
       setOpenedTodo(todo.id);

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Header from "./components/Header";
 
@@ -21,7 +21,6 @@ function App() {
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS));
-    console.log("retrieved local todos", storedTodos);
     if (storedTodos) {
       setTodos(storedTodos);
     }
@@ -70,6 +69,7 @@ function App() {
       ];
     });
   }
+
   //TODO
   // update also already planned todos
   function updateTodo(todoId, name, deadline, description) {
@@ -108,7 +108,6 @@ function App() {
     });
 
     setTodos((prevTodos) => {
-      //check if I need 2 lines or if I can do it in one
       const newTodos = [...prevTodos];
       newTodos.splice(todoIndex, 1);
       return newTodos;

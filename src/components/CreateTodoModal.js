@@ -5,12 +5,15 @@ import React, { forwardRef, useRef, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import ReactDom from "react-dom";
 
-export default function CreateTodoModal({ closeCreateTodo, addTodo, updateTodo, todo }) {
+export default function CreateTodoModal({
+  closeCreateTodo,
+  addTodo,
+  updateTodo,
+  todo,
+}) {
   const todoName = useRef();
   const descriptionName = useRef();
-  const [deadline, setDeadline] = useState(
-    todo ? todo.deadline : null
-  );
+  const [deadline, setDeadline] = useState(todo ? todo.deadline : null);
 
   const [nameValue, setNameValue] = useState(todo ? todo.name : "");
   const [descriptionValue, setDescriptionValue] = useState(
@@ -39,9 +42,8 @@ export default function CreateTodoModal({ closeCreateTodo, addTodo, updateTodo, 
 
     if (!todo) addTodo(name, deadline, description);
     else {
-      updateTodo(todo.id, name, deadline, description)
-      };
-  
+      updateTodo(todo.id, name, deadline, description);
+    }
 
     todoName.current.value = null;
   }
@@ -104,7 +106,7 @@ export default function CreateTodoModal({ closeCreateTodo, addTodo, updateTodo, 
           }}
         >
           {" "}
-          {todo? "SAVE":"CREATE"  }
+          {todo ? "SAVE" : "CREATE"}
         </button>
       </div>
     </>,
