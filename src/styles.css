@@ -20,7 +20,7 @@ h4 {
 #root,
 body {
   height: 100%;
-
+  background-color: #ffffff;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -28,8 +28,8 @@ body {
 
 .about {
   color: #3c403d;
+  background-color: #ffffff;
   text-align: center;
-  background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin: 50px;
   padding: 30px;
@@ -37,7 +37,6 @@ body {
   font-size: 18px;
 }
 .header {
-  background-color: #daded4;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,13 +47,9 @@ body {
   text-align: center;
 }
 
-/* .header div {
-  display: flex;
-} */
 
 .logo-container {
   width: auto;
-  background-color: #ffffff;
   padding: 15px;
 }
 
@@ -69,13 +64,13 @@ body {
 }
 
 .fa-chevron-down {
-  margin-left: 5px;
+  margin-right: 10px;
   color: #3c403d;
   cursor: pointer;
 }
 
 .fa-chevron-down:hover {
-  margin-left: 5px;
+  margin-righ: 5px;
 }
 
 .login-container {
@@ -92,49 +87,47 @@ body {
 .body-container {
   display: flex;
   height: 100%;
-  background-color: #8eada7;
 }
 
 .main-content {
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: space-around;
+  background-color: #a3bcb6;
 }
 
 .nav-panel {
-  width: auto;
+  width: 10%;
+  min-width: min-content;
   display: flex;
   flex-direction: column;
-  background-color: #39603d;
+  border-right: solid 1px #daded4;
+  border-top: solid 1px #daded4;
   height: 100%;
 }
 .nav-panel li {
   display: block;
   padding: 20px 40px;
-
   text-decoration: none;
-
   text-align: center;
 }
 
 .nav-panel li:hover {
-  background-color: #a3bcb6;
+  background-color:#daded4;
   color: #3c403d;
   font-weight: 600;
 }
 
 .nav-tab-active {
-  background-color: #ffffff;
+  background-color: #daded4;
   color: #3c403d;
+  font-size: larger;
   font-weight: 600;
-  box-shadow: inset 0 0 4px #39603d;
 }
 
 .nav-tab-inactive {
-  background-color: #39603d;
-  color: #ffffff;
-  font-size: larger;
-  font-weight: 500;
+  color: #3c403d;
+  font-weight: 600;
 }
 
 .todo-panel-header {
@@ -144,10 +137,10 @@ body {
   align-items: center;
 }
 
-.todo-panel {
+.todo-panel, .day-panel {
   background-color: #ffffff;
   color: #3c403d;
-  width: 30%;
+  width: 35%;
   min-width: min-content;
   margin: 20px;
   border-radius: 3px;
@@ -157,9 +150,12 @@ body {
   display: flex;
 }
 
+
 .todo-list {
   padding: 0 10px;
+  margin-bottom: 10px;
   overflow-y: auto;
+  height: 100%;
 }
 .todo-panel-content {
   display: flex;
@@ -167,13 +163,16 @@ body {
   height: 100%;
 }
 
-.todo-panel h2 {
+.todo-panel h2, .day-panel h2 {
   text-align: center;
   padding: 8px;
   font-size: 2em;
   align-self: center;
   border-radius: 3px;
+  color: #3c403d;
 }
+
+
 
 .todo-overview {
   border: #8eada7;
@@ -181,6 +180,10 @@ body {
   padding: 5px;
   border-left: solid 1px #8eada7;
   border-right: solid 1px #8eada7;
+
+}
+.yourclass:last-child{
+  border-bottom: 0;
 }
 
 .todo-overview-header {
@@ -325,6 +328,7 @@ body {
 .react-datepicker__close-icon::after {
   background-color: #3c403d;
 }
+
 .todo-input-window h2 {
   text-align: center;
   padding: 10px;
@@ -393,8 +397,14 @@ body {
   font-weight: 600;
   font-family: Raleway;
 }
-/* @media (max-width: 699px) {
-  .header div.task-amount-summary {
-    display: none;
-  }
-} */
+
+
+.day-panel{
+  display: flex;
+  margin: 20px;
+}
+
+.day-nav-arrow{
+  align-self: center;
+  margin: 5px;
+}

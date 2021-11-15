@@ -1,15 +1,20 @@
-import {
-  faBell,
-  faChevronDown,
-  faClosedCaptioning,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBell, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 import { changeDateFormatShort, isDeadlineSoon } from "../utils/dateUtils";
 import TodoOverview from "./TodoOverview";
 
-export default function Todo({ todo, toggleTodo, setOpenedTodo, openedTodo }) {
-  function toggleShowStatus() {
+export default function Todo({
+  todo,
+  date,
+  toggleTodo,
+  updateTodo,
+  setOpenedTodo,
+  openedTodo,
+  index,
+}) {
+  function toggleShowTodo() {
     if (openedTodo !== todo.id) {
       setOpenedTodo(todo.id);
     } else {
@@ -18,50 +23,64 @@ export default function Todo({ todo, toggleTodo, setOpenedTodo, openedTodo }) {
   }
 
   function handleTodoClick() {
-    toggleTodo(todo.id);
+    toggleTodo(todo.id, date);
   }
 
-  // function showTodo(){
-  //    setOpenedTodo(todo.id);
-  //   // setShow(true);
-  // }
-
   return (
-    <>
-      <div className="todo">
-        <div className="todo-label">
-          <div className="todo-name">
-            {todo.deadline && isDeadlineSoon(todo.deadline) && (
-              <FontAwesomeIcon
-                icon={faBell}
-                size="1x"
-                className="deadline-icon"
-              />
-            )}
-            <p>{todo.name}</p>
-          </div>
-          <div className="deadline-checkbox-panel">
-            {todo.deadline && (
-              <div className="todo-deadline">
-                {changeDateFormatShort(todo.deadline)}
+    <Draggable draggableId={todo.id} index={index}>
+      {(provided) => (
+        <>
+          <div
+            className="todo"
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <div className="todo-label">
+              <div className="todo-name">
+                {todo.deadline && isDeadlineSoon(todo.deadline) && (
+                  <FontAwesomeIcon
+                    icon={faBell}
+                    size="1x"
+                    className="deadline-icon"
+                  />
+                )}
+                <p>{todo.name}</p>
               </div>
-            )}
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              size="sm"
-              onClick={toggleShowStatus}
-            />
-            <input
-              className="todo-checkbox"
-              type="checkbox"
-              checked={todo.complete}
-              onChange={handleTodoClick}
-            ></input>
+              <div className="deadline-checkbox-panel">
+                {todo.deadline && (
+                  <div className="todo-deadline">
+                    {changeDateFormatShort(todo.deadline)}
+                  </div>
+                )}
+
+                {date && (
+                  <input
+                    className="todo-checkbox"
+                    type="checkbox"
+                    checked={todo.complete}
+                    onChange={handleTodoClick}
+                  ></input>
+                )}
+
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  size="sm"
+                  onClick={toggleShowTodo}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {openedTodo === todo.id && <TodoOverview todo={todo}></TodoOverview>}
-    </>
+          {openedTodo === todo.id && (
+            <TodoOverview
+              todo={todo}
+              updateTodo={updateTodo}
+              setOpenedTodo={setOpenedTodo}
+            ></TodoOverview>
+          )}
+        </>
+      )}
+    </Draggable>
   );
 }
 
